@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import Character from './Character'
 
+
 const urlPlanets = 'http://localhost:9009/api/planets'
 const urlPeople = 'http://localhost:9009/api/people'
 
@@ -11,18 +12,7 @@ function App() {
   const [peopleData, setPeopleData] = useState([])
 
   // ❗ Create effects to fetch the data and put it in state
-  useEffect(() => {
-    axios.get(urlPlanets)
-    .then(res => setPlanetsData(res.data))
-    .catch(err => console.log(err))
-  }, [])
 
-  useEffect(() => {
-    axios.get(urlPeople)
-    .then(res => setPeopleData(res.data))
-    .catch(err => console.log(err))
-  }, [])
-  
   useEffect(() => {
     Promise.all([
       axios.get(urlPlanets),
@@ -30,20 +20,19 @@ function App() {
     ])
     .then(([planetsResponse, peopleResponse]) => {
       const planetMap = planetsResponse.data.reduce((map, planet) => {
-        map[planet.id] = planet.name
-        return map
-      }, {})
-
+        map[planet.id] = planet.name;
+        return map;
+      }, {});
+  
       const peopleWithPlanets = peopleResponse.data.map(person => {
-        return {...person, homeworld: planetMap[person.homeworld]}
-      })
-      setPlanetsData(planetsResponse.data)
-      setPeopleData(peopleWithPlanets)
+        return {...person, homeworld: planetMap[person.homeworld]};
+      });
+  
+      setPlanetsData(planetsResponse.data);
+      setPeopleData(peopleWithPlanets);
     })
-
-    .catch(err => console.log(err))
-
-  }, [])
+    .catch(err => console.log(err));
+  }, []);
 
 
   return (
@@ -53,6 +42,7 @@ function App() {
       {/* ❗ Map over the data in state, rendering a Character at each iteration */
         peopleData.map((character, index) => (
           <Character key={index} data={character} />
+          
         ))
       }
     </div>
