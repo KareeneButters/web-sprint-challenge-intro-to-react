@@ -10,7 +10,7 @@ const [showHomeworld, setShowHomeWorld] = useState(false)
     <div className= "character-card"  onClick={toggleHomeworld}>
       <h2 className="character-name">{data.name}</h2>
       {/* Use the same markup with the same attributes as in the mock */
-       showHomeworld && <p className="character-planet">{data.homeworld.name}</p>
+       showHomeworld && <p className="character-planet">{data.homeworld}</p>
       }
     </div>
   )

@@ -42,7 +42,6 @@ function App() {
       {/* ❗ Map over the data in state, rendering a Character at each iteration */
         peopleData.map((character, index) => (
           <Character key={index} data={character} />
-          
         ))
       }
     </div>
